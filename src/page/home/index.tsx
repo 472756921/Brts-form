@@ -1,8 +1,7 @@
 import React from 'react';
 import PagePanel from '../../component/pagePanel';
 import ComponentPanel from '../../component/componentPanel';
-
-const Styles = require('./home.less');
+import Styles from './home.less';
 
 const Home = () => {
 	return (

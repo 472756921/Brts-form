@@ -25,7 +25,7 @@ const config = {
 };
 
 const createForm = () => {
-	const createInput = (data) => {
+	const createInput = (data: any) => {
 		return (
 			<Form.Item label={data.label} name={data.name} rules={data.rules}>
 				<Input />
@@ -37,7 +37,7 @@ const createForm = () => {
 		input: createInput
 	};
 
-	const createItem = (data) => {
+	const createItem = (data: any) => {
 		return data?.map((it: any, i: number) => {
 			const fn = fnList[it.type];
 
@@ -66,6 +66,14 @@ const createForm = () => {
 				>
 					<Input />
 				</Form.Item>
+				<InputForm label="test"
+					name="username"
+					rules={[
+						{
+							'required': true,
+							'message': 'Please input your username!'
+						}
+					]}/>
 			</Form>
 			{createFather(config)}
 		</div>
