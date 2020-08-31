@@ -1,31 +1,19 @@
-import React, { useState } from 'react';
-import { getUser, postUser } from '../../api';
+import React from 'react';
+import PagePanel from '../../component/pagePanel';
+import ComponentPanel from '../../component/componentPanel';
 
-const LogoImg = require('../../assets/img/benson.jpg');
+const Styles = require('./home.less');
 
 const Home = () => {
-	const [data, changeData] = useState('');
-	const [data2, changeData2] = useState('');
-
-	const getData = async () => {
-		const res = await getUser();
-
-		changeData(res?.username);
-	};
-	const postData = async () => {
-		const res = await postUser({ 'userId': 3 });
-
-		changeData2(res?.username);
-	};
-
 	return (
-		<div>
-			<img src={LogoImg} width="200" />
-			<div>this is BRTS</div>
-			<button onClick={() => getData()}>get Data</button>
-			<button onClick={() => postData()}>Post Data</button>
-			{data}
-			{data2}
+		<div className={Styles.home}>
+			<div className={Styles.pagePanel}>
+				<PagePanel />
+			</div>
+			<div className={Styles.componentsPanel}>
+				<ComponentPanel />
+			</div>
+			<div className={Styles.queryPanel}></div>
 		</div>
 	);
 };
