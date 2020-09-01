@@ -1,6 +1,5 @@
 import React from 'react';
 import { Form } from 'antd';
-
 import Input from './input';
 import InputNumber from './inputNumber';
 import Select from './select';

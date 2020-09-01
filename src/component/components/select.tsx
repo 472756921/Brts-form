@@ -1,8 +1,6 @@
 import React from 'react';
 import { Select } from 'antd';
-
 const { Option, OptGroup } = Select;
-
 interface IOption {
 	label: string;
 	value: string;
@@ -43,9 +41,9 @@ const SelectForm = (props: any) => {
 			const isGroup = Array.isArray(it);
 
 			if (isGroup && it.length > 1) {
-				const options = clearOption(it as Array<IOption>);
+				const optionsInless = clearOption(it as Array<IOption>);
 				const groupInfo: Array<IOption> = it as Array<IOption>;
-				let ops = options.map((ij: IOption, ii: number) =>
+				let ops = optionsInless.map((ij: IOption, ii: number) =>
 					createOption(ij, i + '_' + ii)
 				);
 				return (
