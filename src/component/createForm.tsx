@@ -66,7 +66,7 @@ const config = {
 			componentConfig: {
 				mode: 'multiple',
 				options: [
-					{ label: 'aaa', value: 1 },
+					{ label: 'b', value: 1 },
 					{ label: 'bbb', value: 2 },
 					{ label2: 'bbb', value: 3 }
 				]
@@ -82,7 +82,7 @@ const config = {
 			componentConfig: {
 				mode: 'multiple',
 				options: [
-					[{ label: 'aaa', value: 1 }],
+					[{ groupName: '123' }, { label: 'aaa', value: 1 }],
 					{ label: 'bbb', value: 2 },
 					{ label: 'ccc', value: 3 }
 				]
