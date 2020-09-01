@@ -1,12 +1,8 @@
 import React from 'react';
-import { Form, Input } from 'antd';
+import { Input } from 'antd';
 
 const InputForm = (props: any) => {
-	return (
-		<Form.Item {...props}>
-			<Input />
-		</Form.Item>
-	);
+	return <Input {...props}/>;
 };
 
 export default InputForm;
