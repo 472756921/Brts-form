@@ -13,10 +13,10 @@ const SelectForm = (props: any) => {
 	let { options } = props,
 		noOptionsPros = { ...props };
 
-	const groupInList = props.options.some((_: IOption) => Array.isArray(_));
+	const groupInList = props?.options?.some((_: IOption) => Array.isArray(_));
 
 	const clearOption = (data: Array<IOption>) =>
-		props.options.filter(
+		data?.filter(
 			(_: IOption) => _.label !== undefined && _.value !== undefined
 		);
 
@@ -32,28 +32,29 @@ const SelectForm = (props: any) => {
 
 	const createOption = (data: IOption, i: number | string) => {
 		return (
-			<Option key={i} value={data.value}>
+			<Option key={i} {...data}>
 				{data.label}
 			</Option>
 		);
 	};
 
 	const createOptGroup = () => {
-		return options.map((it: IOption, i: number) => {
+		return options.map((it: IOption | Array<IOption>, i: number) => {
 			const isGroup = Array.isArray(it);
 
 			if (isGroup && it.length > 1) {
-				let ops = it.map((ij: IOption, ii: number) =>
+				const options = clearOption(it as Array<IOption>);
+				const groupInfo: Array<IOption> = it as Array<IOption>;
+				let ops = options.map((ij: IOption, ii: number) =>
 					createOption(ij, i + '_' + ii)
 				);
-				delete ops[0];
 				return (
-					<OptGroup label={it[0].groupName} key={i}>
+					<OptGroup label={groupInfo[0].groupName} key={i}>
 						{ops}
 					</OptGroup>
 				);
 			} else {
-				return createOption(it, i);
+				return createOption(it as IOption, i);
 			}
 		});
 	};

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Select, Button } from 'antd';
-import InputForm from './components/index';
+import IndexForm from './components/index';
 import SelectForm from './components/select';
 
 const { Option } = Select;
@@ -41,9 +41,20 @@ const config = {
 				type: 'input',
 				name: 'input',
 				label: 'input',
+				initialValue: '123',
 				rules: [{ 'required': true, 'message': 'Please input your username!' }]
 			},
-			componentConfig: ''
+			componentConfig: {}
+		},
+		{
+			formItemConfig: {
+				type: 'inputNumber',
+				name: 'inputNumber',
+				label: 'inputNumber',
+				initialValue: '123',
+				rules: [{ 'required': true, 'message': 'Please input your username!' }]
+			},
+			componentConfig: {}
 		},
 		{
 			formItemConfig: {
@@ -59,6 +70,15 @@ const config = {
 		{
 			formItemConfig: {
 				type: 'select',
+				name: 'select_none',
+				label: 'select_none',
+				rules: [{ 'required': true, 'message': 'Please input your username!' }]
+			},
+			componentConfig: {}
+		},
+		{
+			formItemConfig: {
+				type: 'select',
 				name: 'select_multiple',
 				label: 'select_multiple',
 				rules: [{ 'required': true, 'message': 'Please input your username!' }]
@@ -66,7 +86,7 @@ const config = {
 			componentConfig: {
 				mode: 'multiple',
 				options: [
-					{ label: 'b', value: 1 },
+					{ label: 'b', value: 1, disabled: true },
 					{ label: 'bbb', value: 2 },
 					{ label2: 'bbb', value: 3 }
 				]
@@ -82,11 +102,72 @@ const config = {
 			componentConfig: {
 				mode: 'multiple',
 				options: [
-					[{ groupName: '123' }, { label: 'aaa', value: 1 }],
+					[
+						{ groupName: 'groupName' },
+						{ label: 'aaa', value: 1, disabled: true },
+						{ label: 'eee', value: 4 }
+					],
+					{ label: 'bbb', value: 2, disabled: true },
+					{ label: 'ccc', value: 3 }
+				]
+			}
+		},
+		{
+			formItemConfig: {
+				type: 'radio',
+				name: 'radio',
+				label: 'radio',
+				rules: [{ 'required': true, 'message': 'Please input your username!' }]
+			},
+			componentConfig: {
+				options: [
+					{ label: 'aaa', value: 1, disabled: true },
 					{ label: 'bbb', value: 2 },
 					{ label: 'ccc', value: 3 }
 				]
 			}
+		},
+		{
+			formItemConfig: {
+				type: 'checkbox',
+				name: 'checkbox',
+				label: 'checkbox',
+				rules: [{ 'required': true, 'message': 'Please input your username!' }]
+			},
+			componentConfig: {
+				options: [
+					{ label: 'aaa', value: 1, disabled: true },
+					{ label: 'bbb', value: 2 },
+					{ label: 'ccc', value: 3 }
+				]
+			}
+		},
+		{
+			formItemConfig: {
+				type: 'rate',
+				name: 'rate',
+				label: 'rate',
+				rules: [{ 'required': true, 'message': 'Please input your username!' }]
+			},
+			componentConfig: {}
+		},
+		{
+			formItemConfig: {
+				type: 'switch',
+				name: 'switch',
+				label: 'switch',
+				rules: [{ 'required': true, 'message': 'Please input your username!' }]
+			},
+			componentConfig: {}
+		},
+		{
+			formItemConfig: {
+				type: 'slider',
+				name: 'slider',
+				label: 'slider',
+				rules: [{ 'required': true, 'message': 'Please input your username!' }]
+			},
+			componentConfig: {}
 		},
 		{
 			formItemConfig: {
@@ -104,7 +185,7 @@ const config = {
 const createForm = () => {
 	const createFather = (data: IformConfigData) => {
 		const itmes = data.formItems.map((it: IformItem, i: number) => (
-			<InputForm key={`${data.formConfig.name}_${i}`} {...it} />
+			<IndexForm key={`${data.formConfig.name}_${i}`} {...it} />
 		));
 
 		return <Form {...data.formConfig}>{itmes}</Form>;
