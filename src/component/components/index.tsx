@@ -9,6 +9,7 @@ import Checkbox from './checkbox';
 import Rate from './rate';
 import Switch from './switch';
 import Slider from './slider';
+import Cascader from './cascader';
 
 const componentMap: any = {
 	input: Input,
@@ -19,11 +20,13 @@ const componentMap: any = {
 	checkbox: Checkbox,
 	rate: Rate,
 	switch: Switch,
-	slider: Slider
+	slider: Slider,
+	cascader: Cascader
 };
 
 const Index = (props: any) => {
 	const Component = componentMap[props.formItemConfig.type];
+
 	return Component ? (
 		<Form.Item {...props.formItemConfig}>
 			<Component {...props.componentConfig} />
