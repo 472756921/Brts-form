@@ -10,6 +10,8 @@ import Rate from './rate';
 import Switch from './switch';
 import Slider from './slider';
 import Cascader from './cascader';
+import DatePicker from './datePicker';
+import TimePicker from './timePicker';
 
 const componentMap: any = {
 	input: Input,
@@ -21,12 +23,13 @@ const componentMap: any = {
 	rate: Rate,
 	switch: Switch,
 	slider: Slider,
-	cascader: Cascader
+	cascader: Cascader,
+	datePicker: DatePicker,
+	timePicker: TimePicker
 };
 
 const Index = (props: any) => {
 	const Component = componentMap[props.formItemConfig.type];
-
 	return Component ? (
 		<Form.Item {...props.formItemConfig}>
 			<Component {...props.componentConfig} />

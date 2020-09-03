@@ -1,8 +1,8 @@
 import React from 'react';
 import { Cascader } from 'antd';
 
-const InputForm = (props: any) => {
+const CascaderForm = (props: any) => {
 	return <Cascader {...props} />;
 };
 
-export default InputForm;
+export default CascaderForm;

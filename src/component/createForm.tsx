@@ -33,6 +33,9 @@ const config = {
 		wrapperCol: { span: 6 },
 		onFinish: (values: any) => {
 			console.log('values  :>> ', values);
+		},
+		onValuesChange: (changedValues: any, allValues: any) => {
+			console.log('object :>> ', changedValues, allValues);
 		}
 	},
 	formItems: [
@@ -41,7 +44,7 @@ const config = {
 				type: 'input',
 				name: 'input',
 				label: 'input',
-				initialValue: '123',
+				// initialValue: '123',
 				rules: [{ 'required': true, 'message': 'Please input your username!' }]
 			},
 			componentConfig: {}
@@ -51,7 +54,7 @@ const config = {
 				type: 'inputNumber',
 				name: 'inputNumber',
 				label: 'inputNumber',
-				initialValue: '123',
+				// initialValue: '123',
 				rules: [{ 'required': true, 'message': 'Please input your username!' }]
 			},
 			componentConfig: {}
@@ -64,7 +67,10 @@ const config = {
 				rules: [{ 'required': true, 'message': 'Please input your username!' }]
 			},
 			componentConfig: {
-				options: [{ label: 'aaa', value: 1 }]
+				options: [
+					{ label: 'aaa', value: 1 },
+					{ label: 'bbb', value: 2 }
+				]
 			}
 		},
 		{
@@ -72,7 +78,10 @@ const config = {
 				type: 'select',
 				name: 'select_none',
 				label: 'select_none',
-				rules: [{ 'required': true, 'message': 'Please input your username!' }]
+				rules: [{ 'required': true, 'message': 'Please input your username!' }],
+				shouldUpdate: (prevValue: any, curValue: any) => {
+					console.log('object :>> ', prevValue, curValue);
+				}
 			},
 			componentConfig: {}
 		},
@@ -175,7 +184,7 @@ const config = {
 				name: 'cascader',
 				label: 'cascader',
 				rules: [{ 'required': true, 'message': 'Please input your username!' }],
-				initialValue: ['zhejiang', 'hangzhou', 'xihu']
+				// initialValue: ['zhejiang', 'hangzhou', 'xihu']
 			},
 			componentConfig: {
 				options: [
@@ -216,6 +225,46 @@ const config = {
 		},
 		{
 			formItemConfig: {
+				type: 'datePicker',
+				name: 'datePicker',
+				label: 'datePicker',
+				rules: [{ 'required': true, 'message': 'Please input your username!' }]
+			},
+			componentConfig: {}
+		},
+		{
+			formItemConfig: {
+				type: 'datePicker',
+				name: 'datePicker-range',
+				label: 'datePicker-range',
+				rules: [{ 'required': true, 'message': 'Please input your username!' }]
+			},
+			componentConfig: {
+				range: true
+			}
+		},
+		{
+			formItemConfig: {
+				type: 'timePicker',
+				name: 'timePicker',
+				label: 'timePicker',
+				rules: [{ 'required': true, 'message': 'Please input your username!' }]
+			},
+			componentConfig: {}
+		},
+		{
+			formItemConfig: {
+				type: 'timePicker',
+				name: 'timePicker-range',
+				label: 'timePicker-range',
+				rules: [{ 'required': true, 'message': 'Please input your username!' }]
+			},
+			componentConfig: {
+				range: true
+			}
+		},
+		{
+			formItemConfig: {
 				type: 'button'
 			},
 			componentConfig: {
@@ -240,6 +289,16 @@ const createForm = () => {
 		<div>
 			{createFather(config)}
 			<br /> ----- <br />
+			<br /> ----- <br />
+			<br /> ----- <br />
+			<br /> ----- <br />
+			<br /> ----- <br />
+			<br /> ----- <br />
+			<br /> ----- <br />
+			<br /> ----- <br />
+			<br /> ----- <br />
+			<br /> ----- <br />
+			<br /> ----- <br />
 			<Form
 				onFinish={(v) => {
 					console.log('v :>> ', v);
@@ -251,6 +310,10 @@ const createForm = () => {
 					rules={[
 						{ 'required': true, 'message': 'Please input your username!' }
 					]}
+					shouldUpdate={(prevValue: any, curValue: any) => {
+						console.log('object :>> ', prevValue, curValue);
+						return false;
+					}}
 				>
 					<Select mode="multiple">
 						<Option value={1}>1</Option>
