@@ -6,3 +6,7 @@ export const stringifyQuery = (data) => {
 	}
 	return params;
 };
+
+export const getDataType = (data) => {
+	return toString.call(data).slice(8, -1);
+};

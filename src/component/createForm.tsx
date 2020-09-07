@@ -1,7 +1,9 @@
 import React from 'react';
+import { render } from 'react-dom';
 import { Form, Select, Button, Input } from 'antd';
 import IndexForm from './components/index';
 import SelectForm from './components/select';
+import { generatorCode } from './generatorCode';
 
 const { Option } = Select;
 
@@ -279,9 +281,14 @@ const createForm = () => {
 		const itmes = data.formItems.map((it: IformItem, i: number) => (
 			<IndexForm key={`${data.formConfig.name}_${i}`} {...it} />
 		));
+		const FormCom = <Form {...data.formConfig}>{itmes}</Form>;
 
-		return <Form {...data.formConfig}>{itmes}</Form>;
+        console.log('itmes[0] :>> ', itmes[0]);
+		generatorCode(itmes[0]);
+		return FormCom;
 	};
+
+	const testDat = <div>123</div>;
 
 	return (
 		<div>
@@ -326,13 +333,17 @@ const createForm = () => {
 						return prevValues.asdf !== currentValues.asdf;
 					}}
 				>
-					<Form.Item
-						name="customizeGender"
-						label="Customize Gender"
-						rules={[{ required: true }]}
-					>
-						<Input />
-					</Form.Item>
+					{({ getFieldValue }) => {
+						return getFieldValue('asdf') === 1 ? (
+							<Form.Item
+								name="customizeGender"
+								label="Customize Gender"
+								rules={[{ required: true }]}
+							>
+								<Input />
+							</Form.Item>
+						) : null;
+					}}
 				</Form.Item>
 				<Form.Item label="sss" name="asdf" required>
 					<Button htmlType="submit">123</Button>
