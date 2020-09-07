@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Form, Select, Button, Input } from 'antd';
 import IndexForm from './components/index';
 import SelectForm from './components/select';
-import { generatorCode } from './generatorCode';
+import { generatorCode } from './generator/generatorCode';
 
 const { Option } = Select;
 
@@ -283,8 +283,7 @@ const createForm = () => {
 		));
 		const FormCom = <Form {...data.formConfig}>{itmes}</Form>;
 
-        console.log('itmes[0] :>> ', itmes[0]);
-		generatorCode(itmes[0]);
+		console.log('object :>> ', generatorCode(data));
 		return FormCom;
 	};
 
