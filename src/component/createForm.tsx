@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Select, Button } from 'antd';
+import { Form, Select, Button, Input } from 'antd';
 import IndexForm from './components/index';
 import SelectForm from './components/select';
 
@@ -35,7 +35,7 @@ const config = {
 			console.log('values  :>> ', values);
 		},
 		onValuesChange: (changedValues: any, allValues: any) => {
-			console.log('object :>> ', changedValues, allValues);
+			// console.log('object :>> ', changedValues, allValues);
 		}
 	},
 	formItems: [
@@ -79,9 +79,7 @@ const config = {
 				name: 'select_none',
 				label: 'select_none',
 				rules: [{ 'required': true, 'message': 'Please input your username!' }],
-				shouldUpdate: (prevValue: any, curValue: any) => {
-					console.log('object :>> ', prevValue, curValue);
-				}
+				show: [{ item: 'select', value: 1 }]
 			},
 			componentConfig: {}
 		},
@@ -183,7 +181,7 @@ const config = {
 				type: 'cascader',
 				name: 'cascader',
 				label: 'cascader',
-				rules: [{ 'required': true, 'message': 'Please input your username!' }],
+				rules: [{ 'required': true, 'message': 'Please input your username!' }]
 				// initialValue: ['zhejiang', 'hangzhou', 'xihu']
 			},
 			componentConfig: {
@@ -310,16 +308,31 @@ const createForm = () => {
 					rules={[
 						{ 'required': true, 'message': 'Please input your username!' }
 					]}
-					shouldUpdate={(prevValue: any, curValue: any) => {
-						console.log('object :>> ', prevValue, curValue);
-						return false;
-					}}
+					// shouldUpdate={(prevValue: any, curValue: any) => {
+					// 	console.log('object :>> ', prevValue, curValue);
+					// 	return false;
+					// }}
 				>
-					<Select mode="multiple">
+					<Select>
 						<Option value={1}>1</Option>
 						<Option value={2}>2</Option>
 						<Option value={3}>3</Option>
 					</Select>
+				</Form.Item>
+				<Form.Item
+					noStyle
+					shouldUpdate={(prevValues, currentValues) => {
+						console.log('object :>> ', currentValues);
+						return prevValues.asdf !== currentValues.asdf;
+					}}
+				>
+					<Form.Item
+						name="customizeGender"
+						label="Customize Gender"
+						rules={[{ required: true }]}
+					>
+						<Input />
+					</Form.Item>
 				</Form.Item>
 				<Form.Item label="sss" name="asdf" required>
 					<Button htmlType="submit">123</Button>
