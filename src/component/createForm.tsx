@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Form, Select, Button, Input } from 'antd';
+import { Form, Select, DatePicker, TimePicker } from 'antd';
 import IndexForm from './components/index';
-import SelectForm from './components/select';
 import { generatorCode } from './generator/generatorCode';
 
-const { Option } = Select;
+const { RangePicker: RangePickerTime } = TimePicker;
+const { RangePicker: RangePickerDate } = DatePicker;
 
 interface IformConfigData {
 	formConfig: {
@@ -303,61 +303,6 @@ const createForm = () => {
 			<br /> ----- <br />
 			<br /> ----- <br />
 			<br /> ----- <br />
-			<Form
-				onFinish={(v) => {
-					console.log('v :>> ', v);
-				}}
-			>
-				<Form.Item
-					label="sss"
-					name="asdf"
-					rules={[
-						{ 'required': true, 'message': 'Please input your username!' }
-					]}
-					// shouldUpdate={(prevValue: any, curValue: any) => {
-					// 	console.log('object :>> ', prevValue, curValue);
-					// 	return false;
-					// }}
-				>
-					<Select>
-						<Option value={1}>1</Option>
-						<Option value={2}>2</Option>
-						<Option value={3}>3</Option>
-					</Select>
-				</Form.Item>
-				<Form.Item
-					noStyle
-					shouldUpdate={(prevValues, currentValues) => {
-						console.log('object :>> ', currentValues);
-						return prevValues.asdf !== currentValues.asdf;
-					}}
-				>
-					{({ getFieldValue }) => {
-						return getFieldValue('asdf') === 1 ? (
-							<Form.Item
-								name="customizeGender"
-								label="Customize Gender"
-								rules={[{ required: true }]}
-							>
-								<Input />
-							</Form.Item>
-						) : null;
-					}}
-				</Form.Item>
-				<Form.Item label="sss" name="asdf" required>
-					<Button htmlType="submit">123</Button>
-				</Form.Item>
-				<Form.Item
-					label="sss"
-					name="asd2f"
-					required
-					rules={[
-						{ 'required': true, 'message': 'Please input your username!' }
-					]}
-				>
-					<SelectForm options={[{ label: 'aaa', value: 1 }]} />
-				</Form.Item>
-			</Form>
 		</div>
 	);
 };
