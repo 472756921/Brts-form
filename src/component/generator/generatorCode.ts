@@ -135,7 +135,9 @@ const createFormItemCode = (itemConf: IformItem) => {
 
 	if (isShowQueryComp) {
 		returnTempData = `
-		<Form.Item noStyle shouldUpdate={(p: any, c: any)=>${createShouldUpdateFN()[0]}}>
+		<Form.Item noStyle shouldUpdate={(p: any, c: any)=>${
+			createShouldUpdateFN()[0]
+		}}>
 			{({ getFieldValue }) => {
 				return ${createShouldUpdateFN()[1]} ? (
 					<Form.Item ${p1}>
@@ -182,7 +184,7 @@ const createFormCode = (conf: formConfig, childen: string, prefix: string) => {
 
 const checkAlias = (listData: Array<IformItem>) => {
 	let preff = '',
-		comp = '',
+		comp: string[] = [],
 		typeList: string[] = [];
 
 	listData?.map((it) => {
@@ -195,10 +197,9 @@ const checkAlias = (listData: Array<IformItem>) => {
 		if (preffCom[it]) {
 			preff += preffCom[it];
 		}
-		comp += it + ',';
+		comp.push(it.replace(it[0], it[0].toUpperCase()));
 	});
-
-	return `import {${comp}} from 'antd';${preff}`;
+	return `import {${comp.join(',')}} from 'antd';${preff}`;
 };
 
 const generatorCode = (conf: any) => {
