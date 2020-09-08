@@ -1,4 +1,6 @@
 import { wirteProps } from './generatorCode';
+
+const language = 'ts';
 interface IOption {
 	label: string;
 	value: string;
@@ -21,16 +23,6 @@ export const CheckboxForm = (props: any): string => {
 	const p = wirteProps(props);
 
 	return `<Checkbox.Group ${p}/>`;
-};
-
-export const DateCascaderFormForm = (props: any): string => {
-	const p = wirteProps(props);
-
-	if (props.range) {
-		return `<RangePicker ${p}/>`;
-	} else {
-		return `<DatePicker ${p} />`;
-	}
 };
 
 export const InputForm = (props: any): string => {
@@ -69,11 +61,21 @@ export const SwitchForm = (props: any): string => {
 	return `<Switch ${p}/>`;
 };
 
+export const DateCascaderFormForm = (props: any): string => {
+	const p = wirteProps(props);
+
+	if (props.range) {
+		return `<RangePickerAsDate ${p}/>`;
+	} else {
+		return `<DatePicker ${p} />`;
+	}
+};
+
 export const TimeCascaderFormForm = (props: any): string => {
 	const p = wirteProps(props);
 
 	if (props.range) {
-		return `<RangePicker ${p}/>`;
+		return `<RangePickerAsTime ${p}/>`;
 	} else {
 		return `<TimePicker ${p} />`;
 	}
@@ -86,11 +88,17 @@ export const SelectForm = (props: any): string => {
 	const groupInList = props?.options?.some((_: IOption) => Array.isArray(_));
 
 	const clearOption = (data: Array<IOption>) =>
-		data?.filter(
-			(_: IOption) => _.label !== undefined && _.value !== undefined
-		);
+		data?.filter((_: IOption) => {
+			if (Array.isArray(_)) {
+				return true;
+			} else {
+				return _.label !== undefined && _.value !== undefined;
+			}
+		});
 
-	const filterOption = (input: string, option: IOption) => {
+	const filterOption = `(input${language === 'ts' ? ': string' : ''}, option${
+		language === 'ts' ? ': any' : ''
+	}) => {
 		if (option.options) {
 			return false;
 		}
@@ -98,12 +106,12 @@ export const SelectForm = (props: any): string => {
 			return option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 		}
 		return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-	};
+	}`;
 
 	const createOption = (data: IOption, i: number | string) => {
 		const p = wirteProps(data);
 
-		return `<Option key={${i}} ${p}>${data.label}</Option>`;
+		return `<Option key={'${i}'} ${p}>${data.label}</Option>`;
 	};
 
 	const createOptGroup = () => {
@@ -125,10 +133,9 @@ export const SelectForm = (props: any): string => {
 		});
 	};
 
+	options = clearOption(options);
 	if (groupInList) {
 		delete noOptionsPros['options'];
-	} else {
-		options = clearOption(options);
 	}
 
 	if (groupInList) {
@@ -138,7 +145,7 @@ export const SelectForm = (props: any): string => {
 			${createOptGroup().join(' ')}
 		</Select>`;
 	} else {
-		const p = wirteProps(props);
+		const p = wirteProps({ ...props, options: options });
 
 		return `<Select ${p}  filterOption={${filterOption}}></Select>`;
 	}

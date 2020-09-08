@@ -70,8 +70,8 @@ const config = {
 			},
 			componentConfig: {
 				options: [
-					{ label: 'aaa', value: 1 },
-					{ label: 'bbb', value: 2 }
+					{ label: '111', value: 1 },
+					{ label: '222', value: 2 }
 				]
 			}
 		},
@@ -95,9 +95,9 @@ const config = {
 			componentConfig: {
 				mode: 'multiple',
 				options: [
-					{ label: 'b', value: 1, disabled: true },
-					{ label: 'bbb', value: 2 },
-					{ label2: 'bbb', value: 3 }
+					{ label: '333', value: 3, disabled: true },
+					{ label: '4444', value: 4 },
+					{ label2: '555', value: 5 }
 				]
 			}
 		},
@@ -113,11 +113,13 @@ const config = {
 				options: [
 					[
 						{ groupName: 'groupName' },
-						{ label: 'aaa', value: 1, disabled: true },
-						{ label: 'eee', value: 4 }
+						{ label: '666', value: 6, disabled: true },
+						{ label: '777', value: 7 },
+						{ label2: '11111', value: 11 }
 					],
-					{ label: 'bbb', value: 2, disabled: true },
-					{ label: 'ccc', value: 3 }
+					{ label: '888', value: 8, disabled: true },
+					{ label: '999', value: 9 },
+					{ label2: '101010', value: 10 }
 				]
 			}
 		},

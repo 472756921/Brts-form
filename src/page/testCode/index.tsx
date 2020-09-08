@@ -15,8 +15,9 @@ import {
 	Slider,
 	Cascader
 } from 'antd';
-
-const { OptGroup, Option } = Select;
+const { Option, OptGroup } = Select;
+const { RangePicker: RangePickerAsDate } = DatePicker;
+const { RangePicker: RangePickerAsTime } = TimePicker;
 
 const TestCP = (props: any) => {
 	return (
@@ -52,25 +53,23 @@ const TestCP = (props: any) => {
 							{ 'label': 'aaa', 'value': 1 },
 							{ 'label': 'bbb', 'value': 2 }
 						]}
-						filterOption={function filterOption(input: string, option: any) {
+						filterOption={(input: string, option: any) => {
 							if (option.options) {
 								return false;
 							}
-
 							if (option.children) {
 								return (
 									option.children.toLowerCase().indexOf(input.toLowerCase()) >=
 									0
 								);
 							}
-
 							return (
 								option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
 							);
 						}}
 					></Select>
 				</Form.Item>
-				{/* <Form.Item noStyle shouldUpdate={}>
+				<Form.Item noStyle>
 					{({ getFieldValue }) => {
 						return (
 							<Form.Item
@@ -79,14 +78,12 @@ const TestCP = (props: any) => {
 								rules={[
 									{ 'required': true, 'message': 'Please input your username!' }
 								]}
-								show={[{ 'item': 'select', 'value': 1 }]}
 							>
 								<Select
-									filterOption={function filterOption(input, option) {
+									filterOption={(input: string, option: any) => {
 										if (option.options) {
 											return false;
 										}
-
 										if (option.children) {
 											return (
 												option.children
@@ -94,7 +91,6 @@ const TestCP = (props: any) => {
 													.indexOf(input.toLowerCase()) >= 0
 											);
 										}
-
 										return (
 											option.label.toLowerCase().indexOf(input.toLowerCase()) >=
 											0
@@ -104,7 +100,7 @@ const TestCP = (props: any) => {
 							</Form.Item>
 						);
 					}}
-				</Form.Item> */}
+				</Form.Item>
 				<Form.Item
 					name="select_multiple"
 					label="select_multiple"
@@ -119,22 +115,21 @@ const TestCP = (props: any) => {
 							{ 'label': 'bbb', 'value': 2 },
 							{ 'label2': 'bbb', 'value': 3 }
 						]}
-						// filterOption={function filterOption(input, option) {
-						// 	if (option.options) {
-						// 		return false;
-						// 	}
-
-						// 	if (option.children) {
-						// 		return (
-						// 			option.children.toLowerCase().indexOf(input.toLowerCase()) >=
-						// 			0
-						// 		);
-						// 	}
-
-						// 	return (
-						// 		option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-						// 	);
-						// }}
+						filterOption={(input: string, option: any) => {
+							if (option.options) {
+								return false;
+							}
+							if (option.children) {
+								return (
+									option?.children
+										?.toLowerCase()
+										.indexOf(input.toLowerCase()) >= 0
+								);
+							}
+							return (
+								option?.label?.toLowerCase().indexOf(input.toLowerCase()) >= 0
+							);
+						}}
 					></Select>
 				</Form.Item>
 				<Form.Item
@@ -146,36 +141,33 @@ const TestCP = (props: any) => {
 				>
 					<Select
 						mode="multiple"
-						// filterOption={function filterOption(input, option) {
-						// 	if (option.options) {
-						// 		return false;
-						// 	}
-
-						// 	if (option.children) {
-						// 		return (
-						// 			option.children.toLowerCase().indexOf(input.toLowerCase()) >=
-						// 			0
-						// 		);
-						// 	}
-
-						// 	return (
-						// 		option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-						// 	);
-						// }}
+						filterOption={(input: string, option: any) => {
+							if (option.options) {
+								return false;
+							}
+							if (option.children) {
+								return (
+									option.children.toLowerCase().indexOf(input.toLowerCase()) >=
+									0
+								);
+							}
+							return (
+								option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+							);
+						}}
 					>
 						<OptGroup label="groupName" key={0}>
-							<Option key={0_0} label="aaa" value="aaa">
+							<Option key={'0_0'} label="aaa" value="1">
 								aaa
 							</Option>
-							,
-							<Option key={0_1} label="eee" value="eee">
+							<Option key={'0_1'} label="eee" value="4">
 								eee
 							</Option>
-						</OptGroup>{' '}
-						<Option key={1} label="bbb" value="bbb">
+						</OptGroup>
+						<Option key={1} label="bbb" value="2">
 							bbb
-						</Option>{' '}
-						<Option key={2} label="ccc" value="ccc">
+						</Option>
+						<Option key={2} label="ccc" value="3">
 							ccc
 						</Option>
 					</Select>
@@ -283,6 +275,15 @@ const TestCP = (props: any) => {
 					<DatePicker />
 				</Form.Item>
 				<Form.Item
+					name="datePicker-range"
+					label="datePicker-range"
+					rules={[
+						{ 'required': true, 'message': 'Please input your username!' }
+					]}
+				>
+					<RangePickerAsDate />
+				</Form.Item>
+				<Form.Item
 					name="timePicker"
 					label="timePicker"
 					rules={[
@@ -290,6 +291,15 @@ const TestCP = (props: any) => {
 					]}
 				>
 					<TimePicker />
+				</Form.Item>
+				<Form.Item
+					name="timePicker-range"
+					label="timePicker-range"
+					rules={[
+						{ 'required': true, 'message': 'Please input your username!' }
+					]}
+				>
+					<RangePickerAsTime />
 				</Form.Item>
 				<Form.Item>
 					<Button type="primary" htmlType="submit">

@@ -40,6 +40,12 @@ interface IOption {
 	[name: string]: any;
 }
 
+const preffCom: any = {
+	select: 'const { Option, OptGroup } = Select;',
+	datePicker: 'const { RangePicker: RangePickerAsDate } = DatePicker;',
+	timePicker: 'const { RangePicker: RangePickerAsTime } = TimePicker;'
+};
+
 const componentMap = [
 	'input',
 	'select',
@@ -79,7 +85,7 @@ const wirteProps = (props: any, notshowList?: Array<string>) => {
 		}
 		let temp = '';
 
-		if (getDataType(e[1]) === 'String') {
+		if (getDataType(e[1]) === 'String' || getDataType(e[1]) === 'Number') {
 			temp = `${e[0]}='${e[1]}' `;
 		}
 		if (getDataType(e[1]) === 'Object') {
@@ -110,30 +116,42 @@ const createFormItemCode = (itemConf: IformItem) => {
 	const isShowQueryComp =
 		itemConf?.formItemConfig?.show &&
 		itemConf?.formItemConfig?.show?.length > 0;
-	const p1 = wirteProps(itemConf?.formItemConfig, ['type']);
-	const tempData = `
+	const p1 = wirteProps(itemConf?.formItemConfig, ['type', 'show']);
+
+	const createShouldUpdateFN = () => {
+		const pr = itemConf?.formItemConfig?.show?.map(
+			(it: any) => `p.${it.item} !== c.${it.item}`
+		);
+
+		const showp = itemConf?.formItemConfig?.show?.map(
+			(it: any) =>
+				`getFieldValue('${it.item}') === ${
+					typeof it.value === 'number' ? it.value : "'" + it.value + "'"
+				}`
+		);
+
+		return [pr.join('||'), showp.join('&&')];
+	};
+
+	if (isShowQueryComp) {
+		returnTempData = `
+		<Form.Item noStyle shouldUpdate={(p: any, c: any)=>${createShouldUpdateFN()[0]}}>
+			{({ getFieldValue }) => {
+				return ${createShouldUpdateFN()[1]} ? (
+					<Form.Item ${p1}>
+						${createChildenItem(itemConf?.componentConfig, itemConf?.formItemConfig?.type)}
+					</Form.Item>
+				):null;
+			}}
+		</Form.Item>`;
+	} else {
+		returnTempData = `
         <Form.Item ${p1}>
             ${createChildenItem(
 							itemConf?.componentConfig,
 							itemConf?.formItemConfig?.type
 						)}
 		</Form.Item>`;
-
-	const tempData2 = `
-		<Form.Item noStyle shouldUpdate={}>
-			{({ getFieldValue }) => {
-				return (
-					<Form.Item ${p1}>
-						${createChildenItem(itemConf?.componentConfig, itemConf?.formItemConfig?.type)}
-					</Form.Item>
-				);
-			}}
-		</Form.Item>`;
-
-	if (isShowQueryComp) {
-		returnTempData = tempData2;
-	} else {
-		returnTempData = tempData;
 	}
 
 	return returnTempData;
@@ -153,10 +171,34 @@ const createFormItemList = (formItems: Array<IformItem>) => {
 	return codeList;
 };
 
-const createFormCode = (conf: formConfig, childen: string) => {
+const createFormCode = (conf: formConfig, childen: string, prefix: string) => {
 	let confString = wirteProps(conf);
 
-	return `<Form ${confString}>${childen}</Form>`;
+	return `${prefix}
+        <Form ${confString}>
+            ${childen}
+        </Form>`;
+};
+
+const checkAlias = (listData: Array<IformItem>) => {
+	let preff = '',
+		comp = '',
+		typeList: string[] = [];
+
+	listData?.map((it) => {
+		typeList.push(it?.formItemConfig?.type);
+	});
+
+	const CP = Array.from(new Set(typeList));
+
+	CP.map((it: string) => {
+		if (preffCom[it]) {
+			preff += preffCom[it];
+		}
+		comp += it + ',';
+	});
+
+	return `import {${comp}} from 'antd';${preff}`;
 };
 
 const generatorCode = (conf: any) => {
@@ -164,9 +206,10 @@ const generatorCode = (conf: any) => {
 		return '配置文件错误';
 	}
 	const formItem = createFormItemList(conf?.formItems);
-	const form = createFormCode(conf?.formConfig, formItem);
+	const form = createFormCode(conf?.formConfig, formItem, '');
+	const preff = checkAlias(conf?.formItems);
 
-	return form;
+	return preff + form;
 };
 
 export { generatorCode };
